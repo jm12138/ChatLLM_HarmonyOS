@@ -1,0 +1,32 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "Use_internet_reason",
+      "value": "want_to_use_internet"
+    },
+    {
+      "name": "chat",
+      "value": "chat"
+    },
+    {
+      "name": "settings",
+      "value": "settings"
+    },
+    {
+      "name": "send",
+      "value": "send"
+    }
+  ]
+}
