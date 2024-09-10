@@ -31,8 +31,10 @@ class ERNIE {
    * @returns 访问凭证
    */
   async getAccessToken(): Promise<AccessTokenResponse> {
+    // 创建 HTTP 请求
     const httpRequest = http.createHttp();
 
+    // 发送请求
     const response = await httpRequest.request(
       "https://aip.baidubce.com/oauth/2.0/token",
       {
@@ -49,8 +51,10 @@ class ERNIE {
         expectDataType: http.HttpDataType.OBJECT,
       });
 
+    // 销毁 HTTP 请求
     httpRequest.destroy();
 
+    // 返回结果
     return response.result as AccessTokenResponse;
   }
 
@@ -76,21 +80,32 @@ class ERNIE {
     chat_options: ChatOptions,
     callback?: (response: ChatResponse) => void
   ): Promise<ChatResponse | number> {
+    // 获取访问凭证
     const accessTokenResponse = await this.getAccessToken();
     const access_token = accessTokenResponse.access_token;
+
+    // 创建 HTTP 请求
     const httpRequest = http.createHttp();
 
+    // 请求地址
     const base_url = 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/';
     const url = base_url + model + '?access_token=' + access_token;
+
+    // 请求头
     const headers: HTTPHeader = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
 
+    // 初始化返回数据
     let chatResponse: ChatResponse | number;
 
+    // 判断是否为流式调用
     if (callback === undefined) {
+      // 非流式调用
       chat_options.stream = false;
+
+      // 发送请求
       const response = await httpRequest.request(
         url,
         {
@@ -99,22 +114,36 @@ class ERNIE {
           extraData: chat_options,
           expectDataType: http.HttpDataType.OBJECT,
         });
+
+      // 返回结果
       chatResponse = response.result as ChatResponse;
     } else {
+      // 流式调用
       chat_options.stream = true;
+
+      // 文本解码器
       const decoder = util.TextDecoder.create("utf-8");
+
+      // 监听返回数据
       httpRequest.on("dataReceive", (data: ArrayBuffer) => {
+        // 解码返回数据
         const dataUint8Array = new Uint8Array(data);
         const results = decoder.decodeToString(dataUint8Array);
+
+        // 分割返回数据
         const resultsArray = results.split('data: ');
+
+        // 遍历返回数据
         for (let i = 0; i < resultsArray.length; i++) {
-          if (resultsArray[i].length > 0) {
-            const response: ChatResponse = JSON.parse(resultsArray[i]);
-            callback(response);
-          }
+          // JSON 解析
+          const response: ChatResponse = JSON.parse(resultsArray[i]);
+
+          // 调用回调函数
+          callback(response);
         }
       });
 
+      // 发送请求
       chatResponse = await httpRequest.requestInStream(
         url,
         {
@@ -125,7 +154,10 @@ class ERNIE {
         });
     }
 
+    // 销毁 HTTP 请求
     httpRequest.destroy();
+
+    // 返回结果
     return chatResponse;
   }
 }
