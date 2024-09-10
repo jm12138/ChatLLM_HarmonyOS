@@ -1,4 +1,6 @@
-import { ERNIEBot, ChatOptions, ChatResponse, Message } from './ernie';
+import { ERNIE } from '../../../llm/src/ernie'
+import { ChatOptions, ChatResponse, Message } from '../../../llm/types/ernie'
+
 
 @Entry
 @Component
@@ -34,7 +36,7 @@ struct Index {
   /**
    * ERNIE Bot 实例
    */
-  bot = new ERNIEBot(this.client_id, this.client_secret);
+  bot = new ERNIE(this.client_id, this.client_secret);
   /**
    * 聊天回调函数（异步）
    */

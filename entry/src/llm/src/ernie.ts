@@ -1,11 +1,12 @@
 import { http } from '@kit.NetworkKit';
 import { util } from '@kit.ArkTS';
-import { AccessTokenResponse, ChatOptions, ChatResponse, HTTPHeader, Message, Usage } from './types';
+import { HTTPHeader } from '../types/utils';
+import { AccessTokenResponse, ChatOptions, ChatResponse } from '../types/ernie';
 
 /**
  * ERNIEBot 类
  */
-class ERNIEBot {
+class ERNIE {
   /**
    * 客户端ID
    */
@@ -130,4 +131,4 @@ class ERNIEBot {
 }
 
 
-export { ERNIEBot, ChatOptions, ChatResponse, Message, Usage, AccessTokenResponse };
+export { ERNIE };
