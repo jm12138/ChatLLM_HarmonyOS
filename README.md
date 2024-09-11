@@ -5,7 +5,7 @@
 ## 应用演示
 * 简单的对话演示
 
-    * ![APP演示](https://i-blog.csdnimg.cn/direct/ae48d62182a344f9b3699ca76bdd703d.gif)
+    ![APP演示](https://i-blog.csdnimg.cn/direct/ae48d62182a344f9b3699ca76bdd703d.gif)
 
 ## 功能特性
 - 接入 ERNIE 文心一言 API 接口
